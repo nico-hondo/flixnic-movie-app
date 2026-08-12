@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail - Film</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+     <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="../js/getUser.js" defer></script>
+    <script src="../js/handleDetailMov.js" defer></script>
+</head>
+<body>
+    <div class="w-full min-h-screen px-6 bg-black flex flex-col gap-10">
+        <header class="max-w-5xl mx-auto w-full flex flex-row text-white flex justify-between items-center h-[80px] sticky top-0 z-10 bg-black">
+            <h1 class="text-2xl font-bold text-red-600">FlixNic</h1>
+            <nav class="nav-list w-90 h-10 flex justify-center items-center">
+                <ul class="flex flex-row w-full h-full gap-2 justify-evenly items-center uppercase text-xs font-medium">
+                    <li class="cursor-pointer"><a class="p-3">all films</a></li>
+                    <li class="cursor-pointer"><a class="p-3">my watchlists</a></li>
+                    <li class="w-10 h-10 bg-red-500 flex justify-center items-center rounded-full cursor-pointer"><a>login</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="w-full flex-1 flex justify-center items-center wrap-main">
+            <main class="max-w-5xl flex flex-col gap-5 md:gap-10 w-full">
+                
+            </main>
+        </div>
+    </div>
+</body>
+</html>

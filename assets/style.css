@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Libertinus+Math&display=swap');
+
+:root{
+    --font-head: 'Libertinus Math', 'inter';
+}
+
+body{
+    font-family: 'inter';
+}
+
+.transparent{
+    opacity: 0;
+}
+.transparent-auth{
+    display: none;
+    overflow: hidden;
+}
+.section-head{
+    font-family: var(--font-head);
+}

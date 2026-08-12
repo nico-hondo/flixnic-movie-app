@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script src="../js/auth/authRegist.js" defer></script>
+
+    <link rel="stylesheet" href="../assets/style.css">
+    <title>Sign Up - FlixNic</title>
+</head>
+<body>
+    <div class="w-full min-h-screen md:h-screen px-6 bg-black flex flex-col">
+        <header class="max-w-6xl mx-auto w-full flex flex-row text-white flex justify-between items-center h-[80px]">
+            <h1 class="text-2xl font-bold text-red-600">FlixNic</h1>
+            <nav>
+                <ul class="flex flex-row gap-5 uppercase text-xs font-medium">
+                    <li><a href="./pages/conversionDiv.html" class="p-3">all films</a></li>
+                    <li><a href="./pages/trafficSigns.html" class="p-3">my watchlists</a></li>
+                    <li><a href="./pages/trafficSigns.html" class="bg-red-500 py-2 px-4 rounded-3xl">login</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="max-w-6xl mx-auto w-full flex-1 flex justify-center items-center">
+            <main class="flex flex-col md:flex-row gap-10 md:gap-30 w-full">
+                <div class="flex-1 flex flex-col text-center md:text-left justify-center gap-8 text-white">
+                    <h2 class="text-4xl font-bold text-red-600">FlixNic</h1>
+                    <div class="hidden md:flex flex-col gap-8">
+                        <div class="grid grid-row-2 gap-4">
+                            <h3 class="text-5xl font-bold">Unlimited movies & series. Free.</h2>
+                            <p class="text-lg text-gray-500">Create your account and start watching right away. Build <span class="block">your watchlist, leave reviews, and keep track of everything you love.</span></p>
+                        </div>
+                        <div class="flex flex-row items-center gap-10">
+                            <div class="flex flex-row gap-3 items-center">
+                                <i class="fa-solid fa-play text-red-800"></i>
+                                <p class="text-gray-500 text-sm">Unlimited Streaming</p>
+                            </div>
+                            <div class="flex flex-row gap-3 items-center">
+                                <i class="fa-solid fa-circle text-[7px] text-green-500"></i>
+                                <p class="text-gray-500 text-sm">No Commitments</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 flex flex-col justify-center wrap-right">
+                    <div class="block">
+                        <div class="grid grid-row gap-2 text-white mb-10">
+                            <h2 class="text-3xl font-bold">Create your Account</h2>
+                            <p class="text-gray-500 text-sm">Takes about 30 seconds. We just need the basics.</p>
+                        </div>
+                        <form class="flex flex-col gap-5 text-white mb-5">
+                            <input type="text" name="email" id="email" class="w-full h-[50px] md:h-[40px] rounded-lg pl-5" placeholder="Email">
+                            <input type="text" name="nama" id="nama" class="w-full h-[50px] md:h-[40px] rounded-lg pl-5" placeholder="Nama Lengkap">
+                            <div class="relative w-full">
+                                <input type="password" name="password" id="password" class="w-full h-[50px] md:h-[40px] rounded-lg pl-5" placeholder="Password">
+                                <i class="fa-chisel fa-regular fa-eye text-gray-500 absolute top-4 md:top-3 left-[450px] md:left-[470px]"></i>
+                            </div>
+                            <div class="relative w-full">
+                                <input type="password" name="confpass" id="confpass" class="w-full h-[50px] md:h-[40px] rounded-lg pl-5" placeholder="Confirm Password">
+                                <i class="fa-chisel fa-regular fa-eye text-gray-500 absolute top-4 md:top-3 left-[450px] md:left-[470px]"></i>
+                            </div>
+                            <div class="validasi-auth transparent"></div>
+                            <button type="submit" class="h-[50px] md:h-[40px] rounded-xl bg-red-500 font-medium cursor-pointer">Sign Up</button>
+                        </form>
+                        <div class="text-center text-white">
+                            <p class="text-gray-500">Already have an account? <span class="text-red-500 cursor-pointer moveSigninPage">Sign in</span></p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>
