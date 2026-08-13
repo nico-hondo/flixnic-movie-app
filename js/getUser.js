@@ -1,4 +1,5 @@
 const getUser = localStorage.getItem('userRegister');
+const token = localStorage.getItem('tokenUser');
 
 const iconUser = document.querySelector('nav.nav-list ul > li:nth-child(3)');
 // console.log(iconUser)
@@ -8,7 +9,7 @@ const allFilms = document.querySelector('nav.nav-list ul > li:nth-child(1)');
 const watchList = document.querySelector('nav.nav-list ul > li:nth-child(2)');
 // console.log(allFilms);
 
-if(getUser){
+if(token){
     const dataUser = JSON.parse(getUser);
 
     console.log(dataUser);
@@ -27,7 +28,7 @@ iconUser.addEventListener('click', () => {
         window.location.href = "../auth/login.html";    
     }
     //Jika ada token login, maka akan diparse ke halaman login dan diclear localstoragenya;
-    localStorage.removeItem('token');
+    localStorage.removeItem('tokenUser');
     //navigate back to login
     window.location.href = "../auth/login.html";
 })

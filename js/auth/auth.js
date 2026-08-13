@@ -5,6 +5,23 @@ const getUser = localStorage.getItem('userRegister');
 
 const registerPage = document.querySelector('span.cursor-pointer');
 
+const allFilms = document.querySelector('nav.nav-list ul > li:nth-child(1)');
+// console.log(allFilms);
+
+const watchList = document.querySelector('nav.nav-list ul > li:nth-child(2)');
+// console.log(watchList);
+
+const nav = document.querySelector("nav.nav-list");
+const bar = document.querySelector("header > i.fa-bars");
+
+bar.addEventListener('click', () => {
+    if(nav.classList.contains("hidden")){
+        nav.classList.remove('hidden')
+    }else{
+        nav.classList.add('hidden');
+    }
+})
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     
@@ -43,4 +60,12 @@ form.addEventListener("submit", (e) => {
 
 registerPage.addEventListener('click', () => {
     window.location.href = "../../auth/register.html";
+})
+
+allFilms.addEventListener('click', () => {
+    window.location.href = "../index.html";
+})
+
+watchList.addEventListener('click', () => {
+    window.location.href = "../pages/watchList.html";
 })

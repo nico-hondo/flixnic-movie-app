@@ -1,6 +1,3 @@
-const token = localStorage.getItem('userRegister');
-// console.log(getId);
-
 const API_KEY = "5d74e3be220bace8aa2f3306983fdb6c";
 
 async function getDetailFilm(watchListId){
@@ -15,7 +12,6 @@ async function getDetailFilm(watchListId){
         })
     })
 
-    
     const watchList = await Promise.all(getDatabyId);
         // get job and director
     return watchList;
@@ -23,32 +19,33 @@ async function getDetailFilm(watchListId){
 
 document.addEventListener("DOMContentLoaded", async () =>{
     try{
+        const localWatchList = localStorage.getItem('watchListData');
+        const watchList = JSON.parse(localWatchList);
 
-        const localIdWatchList = localStorage.getItem('watchListData');
+        const token = JSON.parse(localStorage.getItem('tokenUser'));
 
         const paragRaph = document.querySelector('div.wrap-main main > div.transparent');
-        console.log(paragRaph);
-        if(!localIdWatchList){
+
+        if(!watchList.length){
             console.log('Watch List Kosong');
             paragRaph.classList.remove('transparent')
             return;
         }
 
-        const watchList = JSON.parse(localIdWatchList);
-
-        const data = await getDetailFilm(watchList);
-
-        console.log(data);
+        const movId = watchList.map(val => val.movId);
+        
+        const data = await getDetailFilm(movId);
 
         const title = document.querySelector("h2.section-head");
 
-        console.log(title);
-
         const countMov = document.querySelector(".countPopular");
-        countMov.textContent = `(${data.length})`;
-        // console.log(wrapDetailFilm);
-        
-        data.forEach((movie) => {
+        countMov.textContent = `(${watchList.length})`;
+
+        if(!token){
+            countMov.classList.add('transparent-auth');
+            paragRaph.classList.remove('transparent');
+        }else{
+            data.forEach((movie) => {
             const putDetail = document.createElement('div');
             putDetail.setAttribute('class', 'flex-1 flex flex-row gap-10');
 
@@ -112,13 +109,29 @@ document.addEventListener("DOMContentLoaded", async () =>{
             spanNdBtn.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-400  text-gray-300 font-semibold text-xs cursor-pointer');
             spanNdBtn.textContent = "remove from watchlist";
             
-            wrapBtn.append(spanStBtn, spanNdBtn);
-            putInfo.append(judul, wrapRating, summaryItem, wrapBtn);
+            spanNdBtn.addEventListener('click', () => {
+                const user = JSON.parse(localStorage.getItem('userRegister'));
+                const localWatchList = JSON.parse(localStorage.getItem('watchListData'));
+                
+                const newWatchList = localWatchList.filter(item => item.movId !== movie.id)
 
-            putDetail.append(imgItem, putInfo);
+                localStorage.setItem('watchListData', JSON.stringify(newWatchList));
 
-            title.insertAdjacentElement('afterend', putDetail);
-        })
+                // window.location.reload();
+                putDetail.remove();
+                const countMov = document.querySelector(".countPopular");
+                countMov.textContent = `(${localWatchList.length - 1})`;
+            })
+
+                wrapBtn.append(spanStBtn, spanNdBtn);
+                putInfo.append(judul, wrapRating, summaryItem, wrapBtn);
+
+                putDetail.append(imgItem, putInfo);
+
+                title.insertAdjacentElement('afterend', putDetail);
+            })
+        }
+        
         // console.log(data);
     }catch(err){
         console.error(err);

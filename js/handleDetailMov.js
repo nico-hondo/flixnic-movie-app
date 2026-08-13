@@ -1,6 +1,3 @@
-const token = localStorage.getItem('userRegister');
-// console.log(getId);
-
 const params = new URLSearchParams(window.location.search);
 const movieId = params.get('id');
 
@@ -10,7 +7,7 @@ async function getDetailFilm(){
     
     const res = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`);
     
-    const movie = res.data; // object tunggal, bukan array
+    const movie = res.data;
 
     const respon = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/credits?api_key=${API_KEY}&language=en-US`);
     const creditData = await respon.json();
@@ -21,9 +18,6 @@ async function getDetailFilm(){
 
     // narik cast
     const castName =  creditData.cast.slice(0, 5).map(actor => actor.name);
-
-    // console.log(res.data);
-    // console.log(directorName);
 
     const movieDetail = {
         ...movie,
@@ -127,69 +121,74 @@ document.addEventListener("DOMContentLoaded", async () =>{
         // create element for wrap 2 button in every item Film
         const wrapBtn = document.createElement('div');
         wrapBtn.setAttribute('class', 'text-xs uppercase flex flex-row items-center gap-3');
-
-        const existingData = localStorage.getItem('watchListData');
-        // const existing = existingData ? JSON.parse(existingData) : [];
-        // const existingId = existing.find(cek => cek === data.id); 
-        // console.log(existingData);
-
         
         const spanBtn = document.createElement('span');
-        spanBtn.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-400 text-gray-300 font-semibold text-xs cursor-pointer');
+        spanBtn.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-400 text-gray-300 font-semibold text-xs cursor-pointer transparent-auth');
         spanBtn.textContent = "add to watchlist";
 
+        const spanTrailBtn = document.createElement('span');
+        spanTrailBtn.setAttribute('class', 'px-4 py-2 text-gray-800 bg-white font-semibold text-xs rounded-4xl cursor-pointer transparent-auth');
+        spanTrailBtn.textContent = "watch trailer";
+
+        const spanBtnRemove = document.createElement('span');
+        spanBtnRemove.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-400 text-gray-300 font-semibold text-xs cursor-pointer transparent-auth');
+        spanBtnRemove.textContent = "remove from watchlist";
+
+        const user = JSON.parse(localStorage.getItem('userRegister'));
+        const existing = JSON.parse(localStorage.getItem('watchListData'));
+        const token = JSON.parse(localStorage.getItem('tokenUser'));
+
+        
+        if(!token){
+            spanBtn.classList.remove('transparent-auth');
+        }else{
+            if(existing.some(item => item.email === user.email && item.movId === data.id)){
+                spanTrailBtn.classList.remove('transparent-auth');
+                spanBtnRemove.classList.remove('transparent-auth');  
+            }else{
+                spanBtn.classList.remove('transparent-auth');
+            }
+        }
+
         spanBtn.addEventListener('click', () => {
+            //take data from localStorage
+            const getUser = JSON.parse(localStorage.getItem('userRegister'));
+            const existingData = localStorage.getItem('watchListData');
+
             if(!token){
                 window.location.href = "../auth/login.html"
             }else{
                 //cek apakah ada key di localstorage dengan nama watchlistdata
-
                 let watchList;
 
+                const email = getUser.email;
+                const movId = data.id;
+                const newWatchList = {email, movId}
                 if(!existingData){
-                    watchList = [data.id];
+                    watchList = [newWatchList];
                 }else{
                     watchList = JSON.parse(existingData);
-
-                    if(watchList.includes(data.id)){
-                        console.log('Sudah ada di watchList');
-                        return;
-                    }
                     
-                    watchList = [...watchList, data.id];
+                    watchList = [...watchList, newWatchList];
                 }
-            localStorage.setItem('watchListData', JSON.stringify(watchList));
-            window.location.reload();
+                localStorage.setItem('watchListData', JSON.stringify(watchList));
+                spanBtn.classList.add('transparent-auth')
+                spanTrailBtn.classList.remove('transparent-auth');
+                spanBtnRemove.classList.remove('transparent-auth');
             }
         })
+
+        spanBtnRemove.addEventListener('click', () => {
+            const newWatchList = existing.filter(item => item.email === user.email && item.movId !== data.id)
+
+            localStorage.setItem('watchListData', JSON.stringify(newWatchList));
+
+            spanBtn.classList.remove('transparent-auth')
+            spanTrailBtn.classList.add('transparent-auth');
+            spanBtnRemove.classList.add('transparent-auth');
+        })
     
-        wrapBtn.append(spanBtn);
-        // }else{
-        //     const spanBtnTrailer = document.createElement('span');
-        //     spanBtnTrailer.setAttribute('class', 'px-4 py-2 rounded-4xl bg-white text-gray-800 font-semibold text-xs cursor-pointer uppercase');
-        //     spanBtnTrailer.textContent = "watch trailer";
-
-        //     const spanBtn = document.createElement('span');
-        //     spanBtn.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-400 text-gray-300 font-semibold text-xs cursor-pointer uppercase');
-        //     spanBtn.textContent = "remove from watchlist";
-
-        //     spanBtnTrailer.addEventListener('click', () => {
-        //         window.location.href = "https://www.nicofernando.my.id";
-        //     })
-
-        //     spanBtn.addEventListener('click', () => {
-        //         let watchList;
-
-        //         watchList = JSON.parse(existingData);
-        //         watchList = watchList.filter((id) => id !== data.id);
-
-        //         localStorage.setItem('watchListData', JSON.stringify(watchList));
-
-        //         window.location.reload();
-        //     })
-
-        //     wrapBtn.append(spanBtnTrailer, spanBtn);
-        // }
+        wrapBtn.append(spanBtn, spanTrailBtn, spanBtnRemove);
         
         putInfo.append(judul, wrapRating, wrapGenre, wrapDirCast, summaryItem, wrapBtn);
 

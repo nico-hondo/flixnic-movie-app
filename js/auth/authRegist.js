@@ -4,6 +4,12 @@ console.log(formUp);
 const signIn = document.querySelector("div.wrap-right div > div span.moveSigninPage");
 console.log(signIn);
 
+const allFilms = document.querySelector('nav.nav-list ul > li:nth-child(1)');
+// console.log(allFilms);
+
+const watchList = document.querySelector('nav.nav-list ul > li:nth-child(2)');
+// console.log(watchList);
+
 formUp.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -42,4 +48,12 @@ formUp.addEventListener("submit", (e) => {
 
 signIn.addEventListener('click', () => {
     window.location.href = "../../auth/login.html";
+})
+
+allFilms.addEventListener('click', () => {
+    window.location.href = "../index.html";
+})
+
+watchList.addEventListener('click', () => {
+    window.location.href = "../pages/watchList.html";
 })

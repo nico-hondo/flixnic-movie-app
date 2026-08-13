@@ -86,8 +86,64 @@ document.addEventListener("DOMContentLoaded", async () =>{
             const spanBtnNdChild = document.createElement('span');
             spanBtnNdChild.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-600 text-xs font-semibold cursor-pointer');
             spanBtnNdChild.textContent = "add to watchlists";
+
+            const spanBtnRdChild = document.createElement('span');
+            spanBtnRdChild.setAttribute('class', 'px-4 py-2 border-2 rounded-4xl border-gray-600 text-xs font-semibold cursor-pointer transparent-auth');
+            spanBtnRdChild.textContent = "remove from watchlists";
+
+            const user = JSON.parse(localStorage.getItem('userRegister'));
+            const existing = JSON.parse(localStorage.getItem('watchListData'));
+            const token = JSON.parse(localStorage.getItem('tokenUser'));
+
+            if(existing.some(item => item.email === user.email && item.movId === movie.id)){
+                if(!token){
+                    spanBtnRdChild.classList.add("transparent-auth");
+                }else{
+                    spanBtnNdChild.classList.add("transparent-auth");
+                    spanBtnRdChild.classList.remove('transparent-auth');
+                }
+            }
+
+            spanBtnNdChild.addEventListener('click', () => {
+                //take data from localStorage
+                const getUser = JSON.parse(localStorage.getItem('userRegister'));
+                const existingData = localStorage.getItem('watchListData');
+
+                if(!token){
+                    window.location.href = "../auth/login.html"
+                }else{
+                    //cek apakah ada key di localstorage dengan nama watchlistdata
+                    let watchList;
+
+                    const email = getUser.email;
+                    const movId = movie.id;
+                    const newWatchList = {email, movId};
+
+                    watchList = JSON.parse(existingData);
+
+                    if(!existingData){
+                        spanBtnNdChild.textContent = "remove from watchlist";
+                        watchList = [newWatchList];
+                    }else{
+                        watchList = [...watchList, newWatchList];
+
+                        spanBtnNdChild.classList.add("transparent-auth");
+                        spanBtnRdChild.classList.remove("transparent-auth");
+                    }
+                    localStorage.setItem('watchListData', JSON.stringify(watchList));
+                }
+            })
             
-            wrapBtn.append(spanBtnStChild, spanBtnNdChild);
+            spanBtnRdChild.addEventListener('click', () => {
+                const newWatchList = existing.filter(item => !(item.email === user.email && item.movId === movie.id))
+
+                localStorage.setItem('watchListData', JSON.stringify(newWatchList));
+
+                spanBtnNdChild.classList.remove('transparent-auth')
+                spanBtnRdChild.classList.add('transparent-auth');
+            })
+
+            wrapBtn.append(spanBtnStChild, spanBtnNdChild, spanBtnRdChild);
             putInfo.append(judul, wrapRating, summaryItem, wrapBtn);
 
             putDetail.append(imgItem, putInfo);
