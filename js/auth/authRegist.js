@@ -44,6 +44,7 @@ formUp.addEventListener("submit", (e) => {
     // console.log(authRegist);
     errorMsg.classList.add("transparent");
     localStorage.setItem("userRegister", JSON.stringify(authRegist));
+    localStorage.setItem("watchListData", JSON.stringify([])); // Add a watchlist data store so that when a user navigates to the movie details, it doesn't result in a blank screen.
 })
 
 signIn.addEventListener('click', () => {

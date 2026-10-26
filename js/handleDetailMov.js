@@ -48,16 +48,16 @@ document.addEventListener("DOMContentLoaded", async () =>{
         })
 
         const putDetail = document.createElement('div');
-        putDetail.setAttribute('class', 'flex-1 flex flex-row gap-10');
+        putDetail.setAttribute('class', 'flex-1 flex flex-wrap gap-y-10 md:flex-nowrap flex-row gap-10');
 
         //create element Img
         const imgUrl = `https://image.tmdb.org/t/p/w500${data.poster_path}`
         const imgItem = document.createElement('img');  
         imgItem.setAttribute('src', imgUrl);
         imgItem.setAttribute('alt', 'test');
-        imgItem.setAttribute('class', 'rounded-md');
-        imgItem.setAttribute('width', '200');
-        imgItem.setAttribute('height', '180');
+        imgItem.setAttribute('class', 'rounded-lg md:rounded-md w-full md:w-[200px]');
+        // imgItem.setAttribute('width', '200');
+        // imgItem.setAttribute('height', '180');
 
         //create element div
         const putInfo = document.createElement('div');
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
         wrapRating.append(spanFirstChild, wrapScore);
 
         const wrapGenre = document.createElement('div');
-        wrapGenre.setAttribute('class', 'flex flex-row gap-2 items-center text-center text-gray-600 text-xs')
+        wrapGenre.setAttribute('class', 'flex flex-wrap gap-y-2 md:flex-nowrap flex-row gap-2 items-center text-center text-gray-600 text-xs')
 
         data.genres.forEach((val) => {
             const span = document.createElement('span');
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
 
         //create element p for summary of movie
         const summaryItem = document.createElement('p');
-        summaryItem.setAttribute('class', 'text-xs text-gray-400 mb-3 leading-5 tracking-wide');
+        summaryItem.setAttribute('class', 'text-xs text-justify text-gray-400 mb-3 leading-5 tracking-wide');
         summaryItem.textContent = data.overview;
 
         // create element for wrap 2 button in every item Film
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
         if(!token){
             spanBtn.classList.remove('transparent-auth');
         }else{
-            if(existing.some(item => item.email === user.email && item.movId === data.id)){
+            if(existing.some(item => item?.email === user.email && item?.movId === data.id)){
                 spanTrailBtn.classList.remove('transparent-auth');
                 spanBtnRemove.classList.remove('transparent-auth');  
             }else{

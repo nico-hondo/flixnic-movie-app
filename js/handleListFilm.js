@@ -38,8 +38,10 @@ document.addEventListener("DOMContentLoaded", async () =>{
 
             //create element div
             const putInfo = document.createElement('div');
-            putInfo.setAttribute('class', 'wrap-detail-info flex flex-col gap-2');
+            putInfo.setAttribute('class', 'wrap-detail-info flex flex-col gap-2 justify-between md:justify-start');
 
+            const putTopInfo = document.createElement('div');
+            putTopInfo.setAttribute('class', 'flex flex-col gap-2')
             //create element h3 - Judul tiap film
             const judul = document.createElement('h3');
             judul.setAttribute('class', 'text-lg');
@@ -66,14 +68,16 @@ document.addEventListener("DOMContentLoaded", async () =>{
             wrapScore.append(spanSecChild, starIcon);
             wrapRating.append(spanFirstChild, wrapScore);
 
+            putTopInfo.append(judul, wrapRating)
+
             //create element p for summary of movie
             const summaryItem = document.createElement('p');
-            summaryItem.setAttribute('class', 'text-xs text-gray-400 mb-3 leading-5');
+            summaryItem.setAttribute('class', 'hidden md:flex lg:flex text-xs text-gray-400 mb-3 leading-5');
             summaryItem.textContent = movie.overview;
 
             // create element for wrap 2 button in every item Film
             const wrapBtn = document.createElement('div');
-            wrapBtn.setAttribute('class', 'text-xs uppercase btn-action-mov-item');
+            wrapBtn.setAttribute('class', 'flex md:block lg:block flex-wrap gap-y-2 text-xs uppercase btn-action-mov- bottom-0');
 
             const spanBtnStChild = document.createElement('span');
             spanBtnStChild.setAttribute('class', 'px-4 py-2 bg-white text-gray-900 font-semibold rounded-4xl mr-2 cursor-pointer')
@@ -92,7 +96,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
             spanBtnRdChild.textContent = "remove from watchlists";
 
             const user = JSON.parse(localStorage.getItem('userRegister'));
-            const existing = JSON.parse(localStorage.getItem('watchListData'));
+            const existing = JSON.parse(localStorage.getItem('watchListData')) || [];
             const token = JSON.parse(localStorage.getItem('tokenUser'));
 
             if(existing.some(item => item.email === user.email && item.movId === movie.id)){
@@ -144,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
             })
 
             wrapBtn.append(spanBtnStChild, spanBtnNdChild, spanBtnRdChild);
-            putInfo.append(judul, wrapRating, summaryItem, wrapBtn);
+            putInfo.append(putTopInfo, summaryItem, wrapBtn);
 
             putDetail.append(imgItem, putInfo);
 

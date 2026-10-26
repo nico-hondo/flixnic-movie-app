@@ -25,11 +25,18 @@ document.addEventListener("DOMContentLoaded", async () =>{
         const token = JSON.parse(localStorage.getItem('tokenUser'));
 
         const paragRaph = document.querySelector('div.wrap-main main > div.transparent');
+        const childParagraph = document.querySelector('div.wrap-main main > div.transparent > span');
 
         if(!watchList.length){
-            console.log('Watch List Kosong');
-            paragRaph.classList.remove('transparent')
-            return;
+           if(!token){
+                paragRaph.classList.remove('transparent')
+                return;
+           }else{
+                console.log('Watch List Kosong');
+                paragRaph.classList.remove('transparent')
+                childParagraph.textContent = "Empty Watchlist !!"
+                return;
+           }
         }
 
         const movId = watchList.map(val => val.movId);
@@ -45,6 +52,7 @@ document.addEventListener("DOMContentLoaded", async () =>{
             countMov.classList.add('transparent-auth');
             paragRaph.classList.remove('transparent');
         }else{
+
             data.forEach((movie) => {
             const putDetail = document.createElement('div');
             putDetail.setAttribute('class', 'flex-1 flex flex-row gap-10');
@@ -121,8 +129,14 @@ document.addEventListener("DOMContentLoaded", async () =>{
                 putDetail.remove();
                 const countMov = document.querySelector(".countPopular");
                 countMov.textContent = `(${localWatchList.length - 1})`;
+                
+                if(localWatchList.length - 1 === 0){
+                    countMov.classList.add('transparent-auth')
+                    paragRaph.classList.remove('transparent')
+                    childParagraph.textContent = "Empty Watchlist !!"
+                }
             })
-
+            
                 wrapBtn.append(spanStBtn, spanNdBtn);
                 putInfo.append(judul, wrapRating, summaryItem, wrapBtn);
 
